@@ -54,8 +54,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests() // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정하겠다.
                 .requestMatchers(PathRequest.toH2Console()).permitAll()// h2-console, favicon.ico 요청 인증 무시
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // static resource 요청 인증 무시
-                .antMatchers("/api/auth/authenticate").permitAll() // 인증 없이 접근 가능
-                .antMatchers("/api/auth/signup").permitAll() // 인증 없이 접근 가능
+                .antMatchers("/api/auth/**").permitAll() // 인증 없이 접근 가능
                 .antMatchers("/api/auth/user").hasRole("USER") // USER, ADMIN만 접근 가능
                 .antMatchers("/api/auth/user/{username}").hasRole("ADMIN") // ADMIN만 접근 가능
                 .antMatchers("/health").permitAll() // 인증 없이 접근 가능

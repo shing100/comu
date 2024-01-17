@@ -33,8 +33,7 @@ public class UserService {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
         User user = saveNewUser(userDto);
-        user.generateEmailCheckToken();
-
+        sendSignUpConfirmEmail(user);
         return user;
     }
 
@@ -52,7 +51,7 @@ public class UserService {
                 .authorities(Collections.singleton(authority))
                 .active(true)
                 .build();
-
+        user.generateEmailCheckToken();
         return userRepository.save(user);
     }
 
@@ -87,7 +86,11 @@ public class UserService {
                 .flatMap(userRepository::findOneWithAuthoritiesByEmail);
     }
 
-    public void completeSignUp(User user) {
-        user.completeSignUp();
+    public boolean completeSignUp(User user, String token) {
+        if (user.getEmailCheckToken().equals(token)) {
+            user.completeSignUp();
+            return true;
+        }
+        return false;
     }
 }

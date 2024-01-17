@@ -8,6 +8,7 @@ import com.shing100.community.user.dto.UserLoginDto;
 import com.shing100.community.user.dto.UserProfileDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,22 +35,7 @@ public class UserController {
     @PostMapping("/authenticate")
     public ResponseEntity<JwtTokenDto> authorize(@Valid @RequestBody UserLoginDto loginDto) {
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-
-        // authenticate 메소드가 실행이 될 때 CustomUserDetailsService class의 loadUserByUsername 메소드가 실행
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        // 해당 객체를 SecurityContextHolder에 저장하고
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        // authentication 객체를 createToken 메소드를 통해서 JWT Token을 생성
-        String jwt = tokenProvider.createToken(authentication);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        // response header에 jwt token에 넣어줌
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
-        // tokenDto를 이용해 response body에도 넣어서 리턴
-        return new ResponseEntity<>(new JwtTokenDto(jwt), httpHeaders, HttpStatus.OK);
+        return getJwtTokenDtoResponseEntity(loginDto.getEmail(), loginDto.getPassword());
     }
 
     // 사용자 등록
@@ -62,11 +48,29 @@ public class UserController {
     }
 
     @GetMapping("/check-email-token")
-    public String checkEmailToken(String token, String email) {
+    public ResponseEntity<?> checkEmailToken(@Param("token") String token, @Param("email") String email) {
         User user = userRepository.findByEmail(email);
-        String view = "account/checked-email";
-        userService.completeSignUp(user);
-        return view;
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.completeSignUp(user, token)) {
+            return ResponseEntity.ok(user);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<JwtTokenDto> getJwtTokenDtoResponseEntity(String user, String user1) {
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(user, user1);
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.createToken(authentication);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+        return new ResponseEntity<>(new JwtTokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
 
     @GetMapping("/user")
