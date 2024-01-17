@@ -1,0 +1,43 @@
+spring:
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb;NON_KEYWORDS=USER
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 1234
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop # SessionFactoryr? ??? ? Drop, Create, Alter ??? ? Drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: ture
+    defer-datasource-initialization: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: messboy1624@gmail.com
+    password: hbmuxreueokcpneh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 5000
+
+app:
+  host: http://localhost:8080
+
+jwt:
+  header: Authorization
+  #HS512 ????? ??? ??? ??? 512bit, ? 64byte ??? secret key? ???? ??.
+  secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
+  token-validity-in-seconds: 86400 # ttl (?)
+

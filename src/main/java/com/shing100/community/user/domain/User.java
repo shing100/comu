@@ -18,8 +18,11 @@ public class User {
     @Id @Unique
     private String email;
 
-    @Column(unique = true, name = "username", length = 50)
+    @Column(name = "username", length = 50)
     private String username;
+
+    @Column(unique = true, name = "nickname", length = 50)
+    private String nickname;
 
     @JsonIgnore
     @Column(name = "password", length = 100)

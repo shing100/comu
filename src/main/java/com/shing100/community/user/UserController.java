@@ -1,8 +1,8 @@
 package com.shing100.community.user;
 
-import com.shing100.community.jwt.JwtFilter;
-import com.shing100.community.jwt.JwtTokenDto;
-import com.shing100.community.jwt.JwtTokenProvider;
+import com.shing100.community.user.jwt.JwtFilter;
+import com.shing100.community.user.jwt.JwtTokenDto;
+import com.shing100.community.user.jwt.JwtTokenProvider;
 import com.shing100.community.user.domain.User;
 import com.shing100.community.user.dto.UserLoginDto;
 import com.shing100.community.user.dto.UserProfileDto;
@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ public class UserController {
     private final UserService userService;
     private final JwtTokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final UserRepository userRepository;
 
     @PostMapping("/authenticate")
     public ResponseEntity<JwtTokenDto> authorize(@Valid @RequestBody UserLoginDto loginDto) {
@@ -52,8 +54,19 @@ public class UserController {
 
     // 사용자 등록
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@Valid @RequestBody UserProfileDto userDto) {
+    public ResponseEntity<User> signup(@Valid @RequestBody UserProfileDto userDto, Errors errors) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(userService.signup(userDto));
+    }
+
+    @GetMapping("/check-email-token")
+    public String checkEmailToken(String token, String email) {
+        User user = userRepository.findByEmail(email);
+        String view = "account/checked-email";
+        userService.completeSignUp(user);
+        return view;
     }
 
     @GetMapping("/user")

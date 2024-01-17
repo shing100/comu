@@ -1,15 +1,12 @@
 plugins {
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
-    id 'org.springframework.boot' version '3.2.0'
-    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.shing100'
-version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '17'
-}
+version = ''
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -22,16 +19,41 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'org.postgresql:postgresql'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+
+    // jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    runtimeOnly 'com.h2database:h2'
+    implementation 'mysql:mysql-connector-java:8.0.27'
+
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+    // ElasticSearch
+    implementation 'co.elastic.clients:elasticsearch-java:8.8.0'
+    implementation 'org.elasticsearch.client:elasticsearch-rest-client:8.8.0'
+    implementation 'jakarta.json:jakarta.json-api:2.0.1'
+
+    // util
+    implementation 'org.apache.commons:commons-lang3'
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
+    implementation 'org.modelmapper:modelmapper:2.3.6'
 }
 
 tasks.named('test') {
