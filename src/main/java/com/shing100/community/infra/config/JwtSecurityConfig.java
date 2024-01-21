@@ -1,7 +1,7 @@
 package com.shing100.community.infra.config;
 
-import com.shing100.community.user.jwt.JwtFilter;
-import com.shing100.community.user.jwt.JwtTokenProvider;
+import com.shing100.community.module.user.jwt.JwtFilter;
+import com.shing100.community.module.user.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

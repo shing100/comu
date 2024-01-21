@@ -1,8 +1,8 @@
 package com.shing100.community.infra.config;
 
-import com.shing100.community.user.jwt.JwtAccessDeniedHandler;
-import com.shing100.community.user.jwt.JwtAuthenticationEntryPoint;
-import com.shing100.community.user.jwt.JwtTokenProvider;
+import com.shing100.community.module.user.jwt.JwtAccessDeniedHandler;
+import com.shing100.community.module.user.jwt.JwtAuthenticationEntryPoint;
+import com.shing100.community.module.user.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
