@@ -1,5 +1,6 @@
 package com.shing100.community.utils;
 
+import com.shing100.community.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,13 +25,22 @@ public class SecurityUtil {
             return Optional.empty();
         }
 
-        String username = null;
+        String email = null;
         if (authentication.getPrincipal() instanceof UserDetails) {
-            username = ((UserDetails) authentication.getPrincipal()).getUsername();
+            email = ((UserDetails) authentication.getPrincipal()).getUsername();
         } else if (authentication.getPrincipal() instanceof String) {
-            username = (String) authentication.getPrincipal();
+            email = (String) authentication.getPrincipal();
         }
 
-        return Optional.ofNullable(username);
+        return Optional.ofNullable(email);
+    }
+
+    public static User getCurrentUser() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            log.debug("Security Context에 인증 정보가 없습니다.");
+            return null;
+        }
+        return (User) authentication.getPrincipal();
     }
 }

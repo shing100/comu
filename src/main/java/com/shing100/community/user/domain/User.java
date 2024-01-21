@@ -3,6 +3,8 @@ package com.shing100.community.user.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.checkerframework.common.aliasing.qual.Unique;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +17,10 @@ import java.util.UUID;
 @AllArgsConstructor @NoArgsConstructor
 public class User {
 
-    @Id @Unique
+    @Id
+    private Long id;
+
+    @Column(unique = true, name = "email", length = 50, nullable = false)
     private String email;
 
     @Column(name = "username", length = 50)
@@ -36,7 +41,11 @@ public class User {
 
     private String emailCheckToken;
     private LocalDateTime emailCheckTokenGeneratedAt;
+    @CreatedDate
     private LocalDateTime joinedAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+    private LocalDateTime lastLoginAt;
 
     @Column(name = "bio", length = 200)
     private String bio;
@@ -45,6 +54,7 @@ public class User {
     private String avatar;
 
     private String location;
+    private String website;
 
     @ManyToMany
     @JoinTable(

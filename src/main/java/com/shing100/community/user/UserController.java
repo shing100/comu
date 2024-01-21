@@ -60,9 +60,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    private ResponseEntity<JwtTokenDto> getJwtTokenDtoResponseEntity(String user, String user1) {
+    private ResponseEntity<JwtTokenDto> getJwtTokenDtoResponseEntity(String email, String password) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user, user1);
+                new UsernamePasswordAuthenticationToken(email, password);
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
