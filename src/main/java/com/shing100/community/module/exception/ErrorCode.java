@@ -21,12 +21,12 @@ public enum ErrorCode {
     FEED_NOT_FOUND_EXCEPTION("해당 피드를 찾을 수 없습니다."),
     FEED_ALREADY_EXIST_EXCEPTION("이미 존재하는 피드입니다."),
     LIKE_ALREADY_EXIST_EXCEPTION("이미 존재하는 좋아요입니다."),
+    NOT_FOUND_FEED_USER_EXCEPTION("해당 피드의 유저를 찾을 수 없습니다."),
 
     COMMENT_NOT_FOUND_EXCEPTION("해당 댓글을 찾을 수 없습니다."),
     COMMENT_ALREADY_EXIST_EXCEPTION("이미 존재하는 댓글입니다."),
     COMMENT_NOT_VALID_EXCEPTION("댓글이 유효하지 않습니다."),
-    COMMENT_NOT_OWNER_EXCEPTION("댓글의 소유자가 아닙니다."),
-    ;
+    COMMENT_NOT_OWNER_EXCEPTION("댓글의 소유자가 아닙니다.");
 
     private final String message;
 }

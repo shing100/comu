@@ -92,4 +92,13 @@ public class UserService {
         }
         return false;
     }
+
+    @Transactional
+    public boolean signOut(User user, String password) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            return false;
+        }
+        user.setActive(false);
+        return true;
+    }
 }

@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,18 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(userService.signup(userDto));
+    }
+
+    @PostMapping("/sign-out")
+    public ResponseEntity<?> signOut(@RequestBody UserLoginDto loginDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (userService.signOut(user, loginDto.getPassword())) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/check-email-token")

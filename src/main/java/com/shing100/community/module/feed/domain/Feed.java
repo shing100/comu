@@ -57,4 +57,18 @@ public class Feed {
     @ManyToOne
     private User deletedAuthor;
 
+    public void update(Feed feed) {
+        this.title = feed.getTitle();
+        this.content = feed.getContent();
+        this.image = feed.getImage();
+        this.video = feed.getVideo();
+        this.audio = feed.getAudio();
+        this.link = feed.getLink();
+        this.feedType = feed.getFeedType();
+        this.feedStatus = feed.getFeedStatus();
+        this.feedCategory = feed.getFeedCategory();
+        this.feedTag = feed.getFeedTag();
+        this.published = feed.isPublished();
+        this.useBanner = feed.isUseBanner();
+    }
 }
