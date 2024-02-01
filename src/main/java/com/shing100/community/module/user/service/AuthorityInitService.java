@@ -1,5 +1,6 @@
-package com.shing100.community.module.user;
+package com.shing100.community.module.user.service;
 
+import com.shing100.community.module.user.AuthorityRepository;
 import com.shing100.community.module.user.domain.Authority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

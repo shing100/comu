@@ -1,8 +1,9 @@
-package com.shing100.community.module.user;
+package com.shing100.community.module.user.service;
 
 import com.shing100.community.infra.mail.EmailMessage;
 import com.shing100.community.infra.mail.EmailService;
 import com.shing100.community.infra.properties.AppProperties;
+import com.shing100.community.module.user.UserRepository;
 import com.shing100.community.module.user.domain.Authority;
 import com.shing100.community.module.user.dto.UserProfileDto;
 import com.shing100.community.module.user.domain.User;

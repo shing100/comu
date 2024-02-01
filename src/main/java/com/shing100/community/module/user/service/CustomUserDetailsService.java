@@ -1,5 +1,7 @@
-package com.shing100.community.module.user;
+package com.shing100.community.module.user.service;
 
+import com.shing100.community.module.user.UserDetailsImpl;
+import com.shing100.community.module.user.UserRepository;
 import com.shing100.community.module.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

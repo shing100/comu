@@ -6,6 +6,7 @@ import com.shing100.community.module.user.jwt.JwtFilter;
 import com.shing100.community.module.user.jwt.JwtTokenDto;
 import com.shing100.community.module.user.jwt.JwtTokenProvider;
 import com.shing100.community.module.user.domain.User;
+import com.shing100.community.module.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
